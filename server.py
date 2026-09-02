@@ -35,18 +35,12 @@ def call_gemini(messages):
 
         elif role == "user":
             conversation.append(
-                {
-                    "role": "user",
-                    "parts": [{"text": content}]
-                }
+                {"role": "user", "parts": [{"text": content}]}
             )
 
         elif role == "assistant":
             conversation.append(
-                {
-                    "role": "model",
-                    "parts": [{"text": content}]
-                }
+                {"role": "model", "parts": [{"text": content}]}
             )
 
     if system_message:
@@ -55,22 +49,17 @@ def call_gemini(messages):
             {
                 "role": "user",
                 "parts": [
-                    {
-                        "text": (
-                            "System instructions:\n\n"
-                            + system_message
-                        )
-                    }
-                ]
-            }
+                    {"text": "System instructions:\n\n" + system_message}
+                ],
+            },
         )
 
     payload = {
         "contents": conversation,
         "generationConfig": {
             "temperature": 0.7,
-            "maxOutputTokens": 8192
-        }
+            "maxOutputTokens": 8192,
+        },
     }
 
     url = (
@@ -80,11 +69,7 @@ def call_gemini(messages):
     )
 
     try:
-        response = requests.post(
-            url,
-            json=payload,
-            timeout=60
-        )
+        response = requests.post(url, json=payload, timeout=60)
 
         if response.status_code == 200:
             data = response.json()
@@ -95,10 +80,7 @@ def call_gemini(messages):
                 .get("parts", [])
             )
 
-            text = "".join(
-                part.get("text", "")
-                for part in parts
-            ).strip()
+            text = "".join(part.get("text", "") for part in parts).strip()
 
             return text, None, 200
 
@@ -114,7 +96,7 @@ def call_groq(messages):
 
     headers = {
         "Authorization": f"Bearer {GROQ_API_KEY}",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
     }
 
     groq_messages = []
@@ -124,18 +106,13 @@ def call_groq(messages):
         content = message.get("content", "")
 
         if role in ["system", "user", "assistant"]:
-            groq_messages.append(
-                {
-                    "role": role,
-                    "content": content
-                }
-            )
+            groq_messages.append({"role": role, "content": content})
 
     payload = {
         "model": GROQ_MODEL,
         "messages": groq_messages,
         "temperature": 0.7,
-        "max_tokens": 8192
+        "max_tokens": 8192,
     }
 
     try:
@@ -143,17 +120,12 @@ def call_groq(messages):
             "https://api.groq.com/openai/v1/chat/completions",
             headers=headers,
             json=payload,
-            timeout=60
+            timeout=60,
         )
 
         if response.status_code == 200:
             data = response.json()
-
-            text = (
-                data["choices"][0]["message"]["content"]
-                .strip()
-            )
-
+            text = data["choices"][0]["message"]["content"].strip()
             return text, None, 200
 
         return None, response.text, response.status_code
@@ -164,41 +136,27 @@ def call_groq(messages):
 
 @app.route("/api/chat", methods=["POST"])
 def chat():
-
     data = request.get_json() or {}
-
     messages = data.get("messages", [])
 
     if not messages:
-        return jsonify(
-            error="No messages provided."
-        ), 400
+        return jsonify(error="No messages provided."), 400
 
-    # Safety limit for request size
     if len(messages) > 50:
         messages = messages[-50:]
 
     text, error, status = call_gemini(messages)
 
     if status == 200:
-        return jsonify(
-            text=text,
-            provider="Gemini"
-        )
+        return jsonify(text=text, provider="Gemini")
 
-    # Gemini rate-limit / temporary failure
     if status in [429, 500, 502, 503]:
         text, error, status = call_groq(messages)
 
         if status == 200:
-            return jsonify(
-                text=text,
-                provider="Groq"
-            )
+            return jsonify(text=text, provider="Groq")
 
-    return jsonify(
-        error=error or "AI request failed."
-    ), status
+    return jsonify(error=error or "Request failed."), status
 
 
 @app.route("/health")
@@ -206,14 +164,10 @@ def health():
     return jsonify(
         status="ok",
         gemini=bool(GEMINI_API_KEY),
-        groq=bool(GROQ_API_KEY)
+        groq=bool(GROQ_API_KEY),
     )
 
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-
-    app.run(
-        host="0.0.0.0",
-        port=port
-    )
+    app.run(host="0.0.0.0", port=port)
