@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Chat</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-top">
+
+            <div class="brand">
+                <div class="brand-icon">✦</div>
+                <span>AI Chat</span>
+            </div>
+
+            <button
+                id="newChatBtn"
+                class="new-chat"
+            >
+                + New Chat
+            </button>
+
+        </div>
+
+        <div class="chat-history">
+
+            <div class="history-title">
+                Today
+            </div>
+
+            <div id="chatHistory"></div>
+
+        </div>
+
+        <div class="sidebar-bottom">
+            AI Assistant
+        </div>
+
+    </aside>
+
+
+    <main class="chat-area">
+
+        <header class="topbar">
+
+            <div>
+                <h1>AI Chat</h1>
+                <span id="providerStatus">
+                    Ready
+                </span>
+            </div>
+
+        </header>
+
+
+        <section
+            id="messages"
+            class="messages"
+        >
+
+            <div
+                id="welcome"
+                class="welcome"
+            >
+
+                <div class="welcome-icon">
+                    ✦
+                </div>
+
+                <h2>
+                    How can I help you?
+                </h2>
+
+                <p>
+                    Ask me anything — technical questions,
+                    business analysis, coding, writing,
+                    research, ideas and more.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <footer class="composer-area">
+
+            <div class="composer">
+
+                <textarea
+                    id="prompt"
+                    rows="1"
+                    placeholder="Message AI..."
+                ></textarea>
+
+                <button
+                    id="sendBtn"
+                    aria-label="Send"
+                >
+                    ➤
+                </button>
+
+            </div>
+
+            <div class="composer-note">
+                AI can make mistakes. Check important information.
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script
+    src="{{ url_for('static', filename='js/script.js') }}"
+></script>
+
+</body>
+
+</html>
