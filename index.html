@@ -3,136 +3,93 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relay</title>
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>AI Chat</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
         rel="stylesheet"
-        href="{{ url_for('static', filename='css/style.css') }}"
     >
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
 <div class="app">
 
-    <aside class="sidebar">
+    <div id="scrim" class="scrim"></div>
+
+    <aside id="sidebar" class="sidebar">
 
         <div class="sidebar-top">
-
             <div class="brand">
-                <div class="brand-icon">✦</div>
-                <span>AI Chat</span>
+                <span class="brand-mark">Relay</span>
             </div>
 
-            <button
-                id="newChatBtn"
-                class="new-chat"
-            >
-                + New Chat
+            <button id="newChatBtn" class="new-chat">
+                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                    <path d="M7.5 1V14M1 7.5H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+                New chat
             </button>
-
         </div>
 
         <div class="chat-history">
-
-            <div class="history-title">
-                Today
-            </div>
-
+            <div class="history-title">History</div>
             <div id="chatHistory"></div>
-
         </div>
 
-        <div class="sidebar-bottom">
-            AI Assistant
-        </div>
+        <div class="sidebar-bottom">Personal workspace</div>
 
     </aside>
-
 
     <main class="chat-area">
 
         <header class="topbar">
+            <button id="menuBtn" class="menu-btn" aria-label="Toggle history">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                    <path d="M2 4.5H16M2 9H16M2 13.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                </svg>
+            </button>
 
-            <div>
-                <h1>AI Chat</h1>
-                <span id="providerStatus">
-                    Ready
-                </span>
+            <div class="topbar-title">
+                <h1 id="chatTitle">New conversation</h1>
+                <span id="providerStatus">Ready</span>
             </div>
-
         </header>
 
+        <section id="messages" class="messages">
 
-        <section
-            id="messages"
-            class="messages"
-        >
-
-            <div
-                id="welcome"
-                class="welcome"
-            >
-
-                <div class="welcome-icon">
-                    ✦
-                </div>
-
-                <h2>
-                    How can I help you?
-                </h2>
-
-                <p>
-                    Ask me anything — technical questions,
-                    business analysis, coding, writing,
-                    research, ideas and more.
-                </p>
-
+            <div id="welcome" class="welcome">
+                <span class="welcome-mark">Relay</span>
+                <h2>What's on your mind?</h2>
+                <p>Ask a question, paste something to work through, or just start typing.</p>
             </div>
 
         </section>
 
-
         <footer class="composer-area">
-
             <div class="composer">
-
-                <textarea
-                    id="prompt"
-                    rows="1"
-                    placeholder="Message AI..."
-                ></textarea>
-
-                <button
-                    id="sendBtn"
-                    aria-label="Send"
-                >
-                    ➤
+                <textarea id="prompt" rows="1" placeholder="Message Relay…"></textarea>
+                <button id="sendBtn" aria-label="Send">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M8 13V3M8 3L3.5 7.5M8 3L12.5 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
                 </button>
-
             </div>
-
-            <div class="composer-note">
-                AI can make mistakes. Check important information.
-            </div>
-
+            <div class="composer-note">Responses may be inaccurate — check anything important.</div>
         </footer>
 
     </main>
 
 </div>
 
-
-<script
-    src="{{ url_for('static', filename='js/script.js') }}"
-></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 
-</html>
+                        </html>
+                    
