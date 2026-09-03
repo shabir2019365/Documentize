@@ -1,95 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relay</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap"
-        rel="stylesheet"
-    >
-
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090c13">
+<title>AI Workspace</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
 <body>
-
-<div class="app">
-
-    <div id="scrim" class="scrim"></div>
-
-    <aside id="sidebar" class="sidebar">
-
-        <div class="sidebar-top">
-            <div class="brand">
-                <span class="brand-mark">Relay</span>
-            </div>
-
-            <button id="newChatBtn" class="new-chat">
-                <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                    <path d="M7.5 1V14M1 7.5H14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-                New chat
-            </button>
+<div class="app-shell">
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="brand">
+            <div class="brand-mark">✦</div>
+            <div><div class="brand-title">AI Workspace</div><div class="brand-subtitle">Personal AI Assistant</div></div>
         </div>
+        <button class="icon-btn mobile-close" id="closeSidebar">×</button>
+    </div>
+    <button class="new-chat-btn" id="newChatBtn"><span>＋</span> New chat</button>
+    <div class="history">
+        <div class="history-label">RECENT CHATS</div>
+        <div id="chatHistory"></div>
+    </div>
+    <div class="sidebar-footer"><div class="status-dot"></div><span>AI services connected</span></div>
+</aside>
 
-        <div class="chat-history">
-            <div class="history-title">History</div>
-            <div id="chatHistory"></div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<main class="main">
+    <header class="topbar">
+        <button class="icon-btn menu-btn" id="openSidebar">☰</button>
+        <div class="topbar-title"><strong id="chatTitle">New chat</strong><span id="providerStatus">Ready</span></div>
+    </header>
+
+    <section class="chat-scroll" id="chatScroll">
+        <div class="chat-container" id="messages">
+            <div class="welcome" id="welcome">
+                <div class="welcome-mark">✦</div>
+                <h1>How can I help you?</h1>
+                <p>Ask anything. Write, analyze, explain, code, brainstorm, or solve a problem.</p>
+                <div class="suggestions">
+                    <button class="suggestion" data-prompt="Explain how an API works in simple terms."><span>⌁</span>Explain an API simply</button>
+                    <button class="suggestion" data-prompt="Help me create a professional business plan outline."><span>▤</span>Create a business plan</button>
+                    <button class="suggestion" data-prompt="Review this idea and tell me how I can improve it."><span>◇</span>Improve an idea</button>
+                    <button class="suggestion" data-prompt="Write a Python example that calls a REST API."><span>&lt;/&gt;</span>Write some code</button>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="sidebar-bottom">Personal workspace</div>
-
-    </aside>
-
-    <main class="chat-area">
-
-        <header class="topbar">
-            <button id="menuBtn" class="menu-btn" aria-label="Toggle history">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                    <path d="M2 4.5H16M2 9H16M2 13.5H16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-            </button>
-
-            <div class="topbar-title">
-                <h1 id="chatTitle">New conversation</h1>
-                <span id="providerStatus">Ready</span>
-            </div>
-        </header>
-
-        <section id="messages" class="messages">
-
-            <div id="welcome" class="welcome">
-                <span class="welcome-mark">Relay</span>
-                <h2>What's on your mind?</h2>
-                <p>Ask a question, paste something to work through, or just start typing.</p>
-            </div>
-
-        </section>
-
-        <footer class="composer-area">
-            <div class="composer">
-                <textarea id="prompt" rows="1" placeholder="Message Relay…"></textarea>
-                <button id="sendBtn" aria-label="Send">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <path d="M8 13V3M8 3L3.5 7.5M8 3L12.5 7.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="composer-note">Responses may be inaccurate — check anything important.</div>
-        </footer>
-
-    </main>
-
+    <div class="composer-wrap">
+        <div class="composer">
+            <textarea id="prompt" rows="1" placeholder="Message AI Workspace..." autocomplete="off"></textarea>
+            <button id="sendBtn" class="send-btn" aria-label="Send message" disabled><span>↑</span></button>
+        </div>
+        <div class="composer-hint">Enter to send · Shift + Enter for a new line</div>
+    </div>
+</main>
 </div>
-
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
-
-                        </html>
-                    
+                                                                            </html>
+    
